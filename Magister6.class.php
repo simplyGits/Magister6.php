@@ -240,7 +240,7 @@ class Magister {
 	}
 
 	function getContact($search){
-		if(empty($this->magisterId) || empty($this->url) || $this->isLoggedIn == false || empty($afkorting)){
+		if(empty($this->magisterId) || empty($this->url) || $this->isLoggedIn == false || empty($search)){
 			return false;
 		}else{
 			$data = json_decode(self::curlget($this->url.'api/personen/'.$this->magisterId.'/contactpersonen?contactPersoonType=Leerling&q='.$afkorting));
