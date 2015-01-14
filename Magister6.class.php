@@ -239,6 +239,15 @@ class Magister {
 		}
 	}
 
+	function getContact($search){
+		if(empty($this->magisterId) || empty($this->url) || $this->isLoggedIn == false || empty($afkorting)){
+			return false;
+		}else{
+			$data = json_decode(self::curlget($this->url.'api/personen/'.$this->magisterId.'/contactpersonen?contactPersoonType=Leerling&q='.$afkorting));
+			return $data;
+		}
+	}
+
 	function getGrades($vak = false, $actievePerioden = true, $alleenBerekendeKolommen = false, $alleenPTAKolommen = false){
 		if(empty($this->magisterId) || empty($this->url) || $this->isLoggedIn == false || empty($this->studyId)){
 			return false;
