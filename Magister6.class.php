@@ -243,7 +243,7 @@ class Magister {
 		if(empty($this->magisterId) || empty($this->url) || $this->isLoggedIn == false || empty($search)){
 			return false;
 		}else{
-			$data = json_decode(self::curlget($this->url.'api/personen/'.$this->magisterId.'/contactpersonen?contactPersoonType=Leerling&q='.$afkorting));
+			$data = json_decode(self::curlget($this->url.'api/personen/'.$this->magisterId.'/contactpersonen?contactPersoonType=Leerling&q='.$search));
 			return $data;
 		}
 	}
