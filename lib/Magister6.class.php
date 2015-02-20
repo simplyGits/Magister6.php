@@ -2,9 +2,6 @@
 
 class Magister {
 
-	//Options
-	public $caching = TRUE;
-
 	//Variables
 	public $url = '';			//Magister 6 url of school, found by selecting a school from $magister->findSchool('name')
 	public $user = '';			//Magister 6 username provided by user
@@ -114,7 +111,7 @@ class Magister {
 		}
 	}
 
-	function __construct($school = false, $user = false, $pass = false){
+	function __construct($school = false, $user = false, $pass = false, $autoLogin = false){
 		if($school !== false){
 			self::setSchool($school);
 		}
@@ -122,6 +119,10 @@ class Magister {
 			self::setCredentials($user, $pass);
 		}
 		$this->intSession = self::generateSession();
+
+		if($autoLogin){
+			self::login();
+		}
 	}
 
 	function getMagisterInfo(){
