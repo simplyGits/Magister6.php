@@ -1,8 +1,8 @@
 <?php
 require('Magister6.class.php');
-$magister = new Magister;
-$magister->setSchool('https://schoolname.magister.net/');
-$magister->setCredentials("username", "password");
+$magister = new Magister("sgtongerlo.magister.net", "user", "pass");
+// $magister->setSchool('https://sgtongerlo.magister.net/');
+// $magister->setCredentials("user", "pass");
 
 $magister->login();
 

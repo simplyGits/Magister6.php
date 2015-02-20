@@ -110,7 +110,13 @@ class Magister {
 		}
 	}
 
-	function __construct(){
+	function __construct($school = false, $user = false, $pass = false){
+		if($school !== false){
+			self::setSchool($school);
+		}
+		if($user !== false && $pass !== false){
+			self::setCredentials($user, $pass);
+		}
 		$this->intSession = self::generateSession();
 	}
 
@@ -142,6 +148,14 @@ class Magister {
 		if(empty($url)){
 			return false;
 		}else{
+			//Url flexibility
+			if(substr($url, -1, 1) !== "/"){
+				$url = $url."/";
+			}
+			if(substr($url, 0, 7) !== "https://" && substr($url, 0, 6) !== "http://"){
+				$url = "https://".$url;
+			}
+
 			$this->url = $url;
 			return true;
 		}
