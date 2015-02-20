@@ -2,6 +2,10 @@
 
 class Magister {
 
+	//Options
+	public $caching = TRUE;
+
+	//Variables
 	public $url = '';			//Magister 6 url of school, found by selecting a school from $magister->findSchool('name')
 	public $user = '';			//Magister 6 username provided by user
 	public $pass = '';			//Magister 6 password provided by user
@@ -11,7 +15,7 @@ class Magister {
 	public $studyId = '';		//Current study the student is following, needed for things like grades
 	public $isLoggedIn = false; //Easy check if the user is logged in
 
-	//request storage variables
+	//Request storage variables
 	public $profile;
 
 	private function curlget($url){
@@ -177,9 +181,14 @@ class Magister {
 		}else{
 			$loginUrl = $this->url.'api/sessie';
 			$result = self::curlpost($loginUrl, array('Gebruikersnaam' => $this->user, 'Wachtwoord' => $this->pass, "IngelogdBlijven" => true, "GebruikersnaamOnthouden" => true));
-			
+
 			$accountUrl = $this->url.'api/account';
 			$account = json_decode(self::curlget($accountUrl));
+
+			if($account->Fouttype == "OngeldigeSessieStatus"){
+				throw new Exception('Magister6.class.php: Ongeldige Sessie, check credentials.');
+				break;
+			}
 
 			$this->magisterId = $account->Persoon->Id;
 
