@@ -16,9 +16,9 @@ class Magister {
 	public $profile;
 
 	private function curlget($url){
-		$cookiefile = 'tmp/'.$this->intSession.'.txt';
-
-		touch($cookiefile);
+		$tmpfile = tmpfile();
+		$cookiefile = stream_get_meta_data($tmpfile)["uri"];
+		fclose($tmpfile);
 
 		if(!empty($this->cookieJar)){
 			file_put_contents($cookiefile, $this->cookieJar);
@@ -49,9 +49,9 @@ class Magister {
 	}
 
 	private function curlpost($url, $post = null){
-		$cookiefile = 'tmp/'.$this->intSession.'.txt';
-
-		touch($cookiefile);
+		$tmpfile = tmpfile();
+		$cookiefile = stream_get_meta_data($tmpfile)["uri"];
+		fclose($tmpfile);
 
 		if(!empty($this->cookieJar)){
 			file_put_contents($cookiefile, $this->cookieJar);
@@ -83,8 +83,8 @@ class Magister {
 		}
 
 		$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-		$header = substr($response, 0, $header_size);
-		$body = substr($response, $header_size);
+		$header = substr($result, 0, $header_size);
+		$body = substr($result, $header_size);
 
 		//var_dump($header);
 
@@ -95,10 +95,6 @@ class Magister {
 		unlink($cookiefile);
 
 		return true;
-	}
-
-	private function generateSession(){
-		return md5($_SERVER['REMOTE_ADDR'].round(microtime(true) * 1000).mt_rand(0,1000)); //generate unique session ID, md5 it to make it look pretty
 	}
 
 	private function boolToString($bool){
@@ -118,7 +114,6 @@ class Magister {
 		if($user !== false && $pass !== false){
 			self::setCredentials($user, $pass);
 		}
-		$this->intSession = self::generateSession();
 
 		if($autoLogin){
 			self::login();
@@ -186,9 +181,11 @@ class Magister {
 			$accountUrl = $this->url.'api/account';
 			$account = json_decode(self::curlget($accountUrl));
 
-			if($account->Fouttype == "OngeldigeSessieStatus"){
-				throw new Exception('Magister6.class.php: Ongeldige Sessie, check credentials.');
-				break;
+			if(!empty($account->Fouttype)){
+				if($account->Fouttype == "OngeldigeSessieStatus"){
+					throw new Exception('Magister6.class.php: Ongeldige Sessie, check credentials.');
+					break;
+				}
 			}
 
 			$this->magisterId = $account->Persoon->Id;
