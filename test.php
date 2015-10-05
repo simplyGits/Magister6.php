@@ -8,4 +8,6 @@ $magister = new Magister("sgtongerlo.magister.net", "user", "pass", true);
 
 echo('<h1>Magister '.$magister->getMagisterInfo()->ProductVersie.'</h1>');
 
-echo('Naam: '.$magister->getUserInfo()->Roepnaam.' '.$magister->getUserInfo()->Achternaam);
+echo('Naam: '.$magister->getUserInfo()->Roepnaam.' '.$magister->getUserInfo()->Achternaam.'<hr>');
+
+echo('<img src="data:image/jpeg;base64,'.$magister->getPicture(200,200,true).'">');

@@ -61,6 +61,19 @@ class Magister {
 		}
 	}
 
+	function getPicture($width = 85, $height = 105, $crop = false){
+		if($this->isLoggedIn == true){
+			$url = $this->url.'api/personen/'.$this->magisterId.'/foto?width='.$width.'&height='.$height;
+			if($crop == true){
+				$url .= "&crop=true";
+			}
+			$raw = $this->curl->get($url);
+			return base64_encode($raw);
+		}else{
+			return false;
+		}
+	}
+
 	function getSession(){
 		if(empty($this->session)){
 			return false;

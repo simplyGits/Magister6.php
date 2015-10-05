@@ -8,6 +8,7 @@
 - [Set necessary data](#set-necessary-data)
 - [Login](#login)
 - [User Info](#user-info)
+- [Picture](#picture)
 - [Appointments](#appointments)
 - [Homework](#homework)
 - [Grades](#grades)
@@ -69,6 +70,12 @@ $magister->login();
 $magister->getUserInfo();
 ```
 *Returns user's profile*
+
+## Picture ##
+```PHP
+$magister->getPicture();
+```
+*Returns user's profile picture in Base64 format (see test.php for example)*
 
 ## Appointments ##
 ```PHP
