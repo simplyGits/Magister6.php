@@ -73,7 +73,7 @@ $magister->getUserInfo();
 
 ## Picture ##
 ```PHP
-$magister->getPicture();
+$magister->getPicture(int 'width', int 'height', bool 'crop');
 ```
 *Returns user's profile picture in Base64 format (see test.php for example)*
 
