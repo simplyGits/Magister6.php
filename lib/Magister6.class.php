@@ -33,7 +33,6 @@ class Magister {
 		$this->curl->options["CURLOPT_SSL_VERIFYPEER"] = false;
 		$this->curl->options['AUTOREFERER'] = true;
 		$this->curl->headers = array("Content-Type"=>"application/json;charset=utf-8");
-		//New Magister requires the use of JSON instead of form data
 
 		if($school !== false){
 			self::setSchool($school);
@@ -127,7 +126,6 @@ class Magister {
 
 			$loginUrl = $this->url.'api/sessies';
 			$result = json_decode($this->curl->post($loginUrl, json_encode(array('Gebruikersnaam' => $this->user, 'Wachtwoord' => $this->pass, "IngelogdBlijven" => true))));
-			//New Magister requires the use of JSON instead of form data
 			if($result->isVerified !== true && $result->state !== "active"){
 				throw new Exception("Magister6.class.php: Session not verified",1);
 			}
