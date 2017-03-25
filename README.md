@@ -1,6 +1,8 @@
 Magister6.php
 =============
 
+# OUTDATED, use <a href="https://github.com/magister-api/magister">Magister-api's magister</a> #
+
 Easy to use, flexible PHP library for the Magister 6 API.
 
 It doesn't manipulate any responses, except for adding functions (such as homework (basic filtering)).
